@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Student</string>
+
+    <string-array name="option">
+    <item>Please Select</item>
+    <item>MC</item>
+    <item>Others (Please state reason in log)</item>
+    </string-array>
+</resources>
