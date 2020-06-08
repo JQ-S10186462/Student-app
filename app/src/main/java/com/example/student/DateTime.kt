@@ -14,6 +14,7 @@ import java.util.*
 class DateTime : AppCompatActivity() {
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_date_time)
@@ -27,7 +28,7 @@ class DateTime : AppCompatActivity() {
 
             val datepickerdialog:DatePickerDialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
-                date.setText("" + dayOfMonth + "/" + monthOfYear + "/" + year)
+                date.setText("" + dayOfMonth + "/" + (monthOfYear+1) + "/" + year)
             }, y, m, d)
 
             datepickerdialog.show()
@@ -40,7 +41,7 @@ class DateTime : AppCompatActivity() {
             val timePickerDialog: TimePickerDialog = TimePickerDialog(
                 this,
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    Mon.setText("" + hourOfDay + ":" + minute);
+                    Mon.setText(String.format("%02d:%02d", hourOfDay , minute));
                 },
                 hh,
                 mm,
@@ -58,7 +59,7 @@ class DateTime : AppCompatActivity() {
             val timePickerDialog: TimePickerDialog = TimePickerDialog(
                 this,
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    Tue.setText("" + hourOfDay + ":" + minute);
+                    Tue.setText(String.format("%02d:%02d", hourOfDay , minute));
                 },
                 hh,
                 mm,
@@ -76,7 +77,7 @@ class DateTime : AppCompatActivity() {
             val timePickerDialog: TimePickerDialog = TimePickerDialog(
                 this,
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    Wed.setText("" + hourOfDay + ":" + minute);
+                    Wed.setText(String.format("%02d:%02d", hourOfDay , minute));
                 },
                 hh,
                 mm,
@@ -94,7 +95,7 @@ class DateTime : AppCompatActivity() {
             val timePickerDialog: TimePickerDialog = TimePickerDialog(
                 this,
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    Thu.setText("" + hourOfDay + ":" + minute);
+                    Thu.setText(String.format("%02d:%02d", hourOfDay , minute));
                 },
                 hh,
                 mm,
@@ -112,7 +113,7 @@ class DateTime : AppCompatActivity() {
             val timePickerDialog: TimePickerDialog = TimePickerDialog(
                 this,
                 TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    Fri.setText("" + hourOfDay + ":" + minute);
+                    Fri.setText(String.format("%02d:%02d", hourOfDay , minute));
                 },
                 hh,
                 mm,

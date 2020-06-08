@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Attendance"></activity>
-        <activity android:name=".Fri"></activity>
+        <activity android:name=".Present"></activity>
+        <activity android:name=".MainMenu" />
+        <activity android:name=".Attendance" />
+        <activity android:name=".Reflection" />
+        <activity android:name=".Fri" />
         <activity android:name=".Thur" />
         <activity android:name=".Wed" />
         <activity android:name=".Tue" />
