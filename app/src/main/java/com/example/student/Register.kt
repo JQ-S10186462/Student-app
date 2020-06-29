@@ -29,17 +29,9 @@ class Register : AppCompatActivity() {
         var Postal = findViewById<EditText>(R.id.Postal)
         var Course = findViewById<EditText>(R.id.Course)
         var Submit  = findViewById<Button>(R.id.Submit)
-        var script  = "https://script.google.com/macros/s/AKfycbwsfWSeDTVMrKCyIB7CXZxJaWjxGJtVFjdBHWWV1-d4iJvWbyw/exec?"
+        var script  = "https://script.google.com/macros/s/AKfycbzjmCkpW5LuFOvdPbdVScr2IPNFTFQ3ZjubgIL7Jpv7xdKhvFnY/exec?"
 
 
-        val jsonArray = JSONArray()
-        jsonArray.put(NPISID)
-        jsonArray.put(ID)
-        jsonArray.put(Postal)
-        jsonArray.put(Course)
-
-
-        val mRequestBody = jsonArray.toString()
 
         Next.setOnClickListener {
          startActivity(Intent(this, Password::class.java))
@@ -47,30 +39,39 @@ class Register : AppCompatActivity() {
 
         Submit.setOnClickListener {
             val Student_ID = ID.editableText.toString()
+            sharedPreference.save("ID", Student_ID)
 
-            sharedPreference.save("ID" ,Student_ID)
+            val NPISID_text = NPISID.editableText.toString()
+            sharedPreference.save("Supervisor", NPISID_text)
 
-           val NPISID_text = NPISID.editableText.toString()
-           val Postal_text = Postal.editableText.toString()
+
+            val Postal_text = Postal.editableText.toString()
             val Course_text = Course.editableText.toString()
 
-            val queue = Volley.newRequestQueue(this)
-            var input =""
-             input += script + "NPISID=" + NPISID_text + "&Course=" + Course_text + "&StudentID=S" + Student_ID + "&Postal=" + Postal_text + "&Comment=Setup"
+            if ((Student_ID == "") || (NPISID_text == "") || (Postal_text == "") || (Course_text == "")) {
+                Toast.makeText(applicationContext, "Please Fill in the Blanks!", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                val queue = Volley.newRequestQueue(this)
+                var input = ""
+                input += script + "NPISID=" + NPISID_text + "&Course=" + Course_text + "&StudentID=S" + Student_ID + "&Postal=" + Postal_text + "&Comment=Setup"
 
 
-            val stringRequest = object: StringRequest(Request.Method.GET,input,
-                Response.Listener<String> {
-                    Toast.makeText(applicationContext,"Success",Toast.LENGTH_SHORT).show()
-                },
-                Response.ErrorListener {Toast.makeText(applicationContext,"Fail",Toast.LENGTH_SHORT).show()}) {
+                val stringRequest = object : StringRequest(Request.Method.GET, input,
+                    Response.Listener<String> {
+                        Toast.makeText(applicationContext, "Success", Toast.LENGTH_SHORT).show()
+                    },
+                    Response.ErrorListener {
+                        Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
+                    }) {
 
-            }
-
-
-
-            queue.add(stringRequest)
                 }
+
+
+
+                queue.add(stringRequest)
+            }
+        }
 
             }
 

@@ -7,7 +7,7 @@
     tools:context=".Present">
 
     <Button
-        android:id="@+id/Present"
+        android:id="@+id/Avaliable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="162dp"
