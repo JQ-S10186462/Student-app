@@ -22,11 +22,15 @@ class Register : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        val NPISID = findViewById<EditText>(R.id.NPISID)
-        val ID = findViewById<EditText>(R.id.Student)
-        val Postal = findViewById<EditText>(R.id.Postal)
-        val Course = findViewById<EditText>(R.id.Course)
-        val Submit  = findViewById<Button>(R.id.Submit)
+        val sharedPreference:SharedPreference=SharedPreference(this)
+
+        var NPISID = findViewById<EditText>(R.id.NPISID)
+        var ID = findViewById<EditText>(R.id.Student)
+        var Postal = findViewById<EditText>(R.id.Postal)
+        var Course = findViewById<EditText>(R.id.Course)
+        var Submit  = findViewById<Button>(R.id.Submit)
+        var script  = "https://script.google.com/macros/s/AKfycbwsfWSeDTVMrKCyIB7CXZxJaWjxGJtVFjdBHWWV1-d4iJvWbyw/exec?"
+
 
         val jsonArray = JSONArray()
         jsonArray.put(NPISID)
@@ -38,29 +42,33 @@ class Register : AppCompatActivity() {
         val mRequestBody = jsonArray.toString()
 
         Next.setOnClickListener {
-         startActivity(Intent(this, DateTime::class.java))
+         startActivity(Intent(this, Password::class.java))
         }
 
         Submit.setOnClickListener {
+            val Student_ID = ID.editableText.toString()
+
+            sharedPreference.save("ID" ,Student_ID)
+
+           val NPISID_text = NPISID.editableText.toString()
+           val Postal_text = Postal.editableText.toString()
+            val Course_text = Course.editableText.toString()
+
             val queue = Volley.newRequestQueue(this)
-            val url = "https://script.google.com/macros/s/AKfycbwsfWSeDTVMrKCyIB7CXZxJaWjxGJtVFjdBHWWV1-d4iJvWbyw/exec?"
+            var input =""
+             input += script + "NPISID=" + NPISID_text + "&Course=" + Course_text + "&StudentID=S" + Student_ID + "&Postal=" + Postal_text + "&Comment=Setup"
 
 
-            val stringRequest = object: StringRequest(Request.Method.POST,url,
+            val stringRequest = object: StringRequest(Request.Method.GET,input,
                 Response.Listener<String> {
                     Toast.makeText(applicationContext,"Success",Toast.LENGTH_SHORT).show()
                 },
                 Response.ErrorListener {Toast.makeText(applicationContext,"Fail",Toast.LENGTH_SHORT).show()}) {
-                    override fun getParams(): MutableMap<String, String> {
-                        val params = HashMap<String, String>()
-                        params.put("NPISID_Label", NPISID.toString())
-                        params.put("Course_Label", Course.toString())
-                        params.put("StudentID_Label", ID.toString())
-                        params.put("Postal_Label",Postal.toString())
-                        return params
-                    }
 
-                }
+            }
+
+
+
             queue.add(stringRequest)
                 }
 

@@ -11,6 +11,8 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -25,6 +27,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val Code = findViewById<EditText>(R.id.Password)
+        val UserName = findViewById<EditText>(R.id.Student_UserName)
+
+        val sharedPreference:SharedPreference=SharedPreference(this)
+
         val show = findViewById<Button>(R.id.notify)
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notify.setOnClickListener {
@@ -59,11 +67,18 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        SignIn.setOnClickListener {
+            if ((sharedPreference.getValueString("name") == (Code.text.toString())) && (sharedPreference.getValueString("ID") == (Student_UserName.text.toString()))) {
+                startActivity(Intent(this, MainMenu::class.java))
+            }
+                else
+                {
+                    Toast.makeText(this@MainActivity,"Incorrect UserName or Password", Toast.LENGTH_SHORT ).show()
+                }
+            }
+
         SignUp.setOnClickListener {
             startActivity(Intent(this, Register::class.java))
-        }
-        SignIn.setOnClickListener {
-            startActivity(Intent(this, MainMenu::class.java))
         }
     }
 }
