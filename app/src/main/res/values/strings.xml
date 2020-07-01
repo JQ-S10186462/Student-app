@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Student</string>
 
-    <string-array name="option">
+    <string-array name="Choice">
         <item>Please Select</item>
         <item>MC</item>
         <item>Others (Please state reason in log)</item>

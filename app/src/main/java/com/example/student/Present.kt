@@ -20,9 +20,10 @@ class Present : AppCompatActivity() {
 
         val sharedPreference:SharedPreference= SharedPreference(this)
 
-        Absent.setOnClickListener {
-            startActivity(Intent(this,NotPresent::class.java))
+        Status.setOnClickListener {
+            startActivity(Intent(this,Unavailable::class.java))
         }
+
 
         Avaliable.setOnClickListener {
           val ID = sharedPreference.getValueString("ID")
@@ -30,7 +31,7 @@ class Present : AppCompatActivity() {
 
           val queue = Volley.newRequestQueue(this)
           var input = ""
-           input += script + "NPISID=" + NPISID + "&Course=*&StudentID=S" + ID + "&Present=1"
+           input += script + "NPISID=" + NPISID + "&Course=*&StudentID=s" + ID + "&Present=1"
 
           val stringRequest = object: StringRequest(Request.Method.GET,input,
               Response.Listener <String> {

@@ -54,7 +54,7 @@ class Register : AppCompatActivity() {
             } else {
                 val queue = Volley.newRequestQueue(this)
                 var input = ""
-                input += script + "NPISID=" + NPISID_text + "&Course=" + Course_text + "&StudentID=S" + Student_ID + "&Postal=" + Postal_text + "&Comment=Setup"
+                input += script + "NPISID=" + NPISID_text + "&Course=" + Course_text + "&StudentID=s" + Student_ID + "&Postal=" + Postal_text + "&Comment=Setup"
 
 
                 val stringRequest = object : StringRequest(Request.Method.GET, input,
