@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -68,6 +69,15 @@ class Unavailable : AppCompatActivity() {
                         Toast.makeText(applicationContext,"Please try again",Toast.LENGTH_SHORT).show()
                     })
                     {}
+
+                stringRequest.setRetryPolicy(
+                    DefaultRetryPolicy(
+                        0,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                    )
+                )
+
                 queue.add(stringRequest)
 
             }

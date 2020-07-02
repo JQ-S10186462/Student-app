@@ -6,13 +6,12 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
-import com.android.volley.Request.Method.POST
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_register.*
-import org.json.JSONArray
 
 
 class Register : AppCompatActivity() {
@@ -52,6 +51,7 @@ class Register : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Please Fill in the Blanks!", Toast.LENGTH_SHORT)
                     .show()
             } else {
+
                 val queue = Volley.newRequestQueue(this)
                 var input = ""
                 input += script + "NPISID=" + NPISID_text + "&Course=" + Course_text + "&StudentID=s" + Student_ID + "&Postal=" + Postal_text + "&Comment=Setup"
@@ -63,13 +63,22 @@ class Register : AppCompatActivity() {
                     },
                     Response.ErrorListener {
                         Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
-                    }) {
-
-                }
-
+                    })
+                {}
+                stringRequest.setRetryPolicy(
+                    DefaultRetryPolicy(
+                        0,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                    )
+                )
 
 
                 queue.add(stringRequest)
+
+
+
+
             }
         }
 

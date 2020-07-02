@@ -7,6 +7,7 @@ import android.support.annotation.RequiresApi
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -54,7 +55,7 @@ class Reflection : AppCompatActivity() {
 
             var yr = "" + year
             var mh = ""
-            var dy =""
+            var dy = ""
 
             if (Nm < 10)
             {
@@ -103,6 +104,15 @@ class Reflection : AppCompatActivity() {
                     Response.ErrorListener {
                         Toast.makeText(applicationContext, "Please submit reflection again", Toast.LENGTH_SHORT).show()
                     }) {}
+
+                stringRequest.setRetryPolicy(
+                    DefaultRetryPolicy(
+                        0,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                    )
+                )
+
                 queue.add(stringRequest)
 
 

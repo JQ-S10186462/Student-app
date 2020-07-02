@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_date_time.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class DateTime : AppCompatActivity(), TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     private var minute = 0
@@ -38,7 +39,7 @@ class DateTime : AppCompatActivity(), TimePickerDialog.OnTimeSetListener, DatePi
 
 
         val Button = findViewById<Button>(R.id.time)
-       val textView     = findViewById<TextView>(R.id.Timetext)
+        val textView     = findViewById<TextView>(R.id.Timetext)
 
         Button.setOnClickListener {
             val cal = Calendar.getInstance()
