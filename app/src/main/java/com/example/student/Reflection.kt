@@ -1,5 +1,9 @@
 package com.example.student
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -30,7 +34,22 @@ class Reflection : AppCompatActivity() {
 
         val sharedPreference: SharedPreference = SharedPreference(this)
 
+        val x = "1"
+        sharedPreference.save("x",x)
+
+
         var script = "https://script.google.com/macros/s/AKfycbzjmCkpW5LuFOvdPbdVScr2IPNFTFQ3ZjubgIL7Jpv7xdKhvFnY/exec?"
+
+        val now = Calendar.getInstance()
+
+        val Hou = now.get(Calendar.HOUR_OF_DAY)
+        val min = now.get(Calendar.MINUTE)
+
+        if ((Hou == 18) && (min == 0))
+        {
+            val x = "1"
+            sharedPreference.save("x",x)
+        }
 
 
 
@@ -89,7 +108,8 @@ class Reflection : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-
+                val x = "0"
+                sharedPreference.save("x",x)
                 val queue = Volley.newRequestQueue(this)
                 var input = ""
                 input += script + "Date=" + yr + "-" + mh + "-" + dy + "&Course=!&StudentID=s" + ID + "&Reflections=" + Log

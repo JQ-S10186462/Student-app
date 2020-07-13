@@ -7,4 +7,9 @@
         <item>Others (Please state reason in log)</item>
     </string-array>
 
+    <string-array name="Switch">
+<item>OFF</item>
+<item>ON</item>
+    </string-array>
+
 </resources>

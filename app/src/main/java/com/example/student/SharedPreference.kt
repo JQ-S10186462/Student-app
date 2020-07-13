@@ -14,6 +14,7 @@ class SharedPreference(val context:Context) {
 
         editor!!.commit()
     }
+
     
 
     fun getValueString(Identification: String): String? {
