@@ -51,6 +51,8 @@ class Register : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Please Fill in the Blanks!", Toast.LENGTH_SHORT)
                     .show()
             } else {
+                val x = "0"
+
 
                 val queue = Volley.newRequestQueue(this)
                 var input = ""

@@ -34,22 +34,18 @@ class Reflection : AppCompatActivity() {
 
         val sharedPreference: SharedPreference = SharedPreference(this)
 
-        val x = "1"
-        sharedPreference.save("x",x)
+
+        val alarm = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, AlarmBroadcast::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val pendingIntent1 = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent2 = PendingIntent.getBroadcast(this, 2, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+
 
 
         var script = "https://script.google.com/macros/s/AKfycbzjmCkpW5LuFOvdPbdVScr2IPNFTFQ3ZjubgIL7Jpv7xdKhvFnY/exec?"
-
-        val now = Calendar.getInstance()
-
-        val Hou = now.get(Calendar.HOUR_OF_DAY)
-        val min = now.get(Calendar.MINUTE)
-
-        if ((Hou == 18) && (min == 0))
-        {
-            val x = "1"
-            sharedPreference.save("x",x)
-        }
 
 
 

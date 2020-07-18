@@ -88,6 +88,8 @@ class DateTime : AppCompatActivity() {
         Fri.adapter = adapter
 
 
+
+
         val Hour_Day = findViewById<EditText>(R.id.Ho)
         val Minute_day = findViewById<EditText>(R.id.Mi)
 
@@ -127,6 +129,13 @@ class DateTime : AppCompatActivity() {
 
         buttonsubmit.setOnClickListener {
 
+            val today = Calendar.getInstance()
+
+            val day = today.get(Calendar.DAY_OF_WEEK)
+            val week = today.get(Calendar.WEEK_OF_YEAR)
+            val hour = today.get(Calendar.HOUR_OF_DAY)
+            val minute = today.get(Calendar.MINUTE)
+
             val Mon_Text = Monday.selectedItem.toString()
             val Tue_Text = Tuesday.selectedItem.toString()
             val Wed_Text = Wednesday.selectedItem.toString()
@@ -147,7 +156,11 @@ class DateTime : AppCompatActivity() {
                 monday.set(Calendar.MINUTE, M)
                 monday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
 
-
+             if ((day > 2) || (hour > H) || ((hour == H) && (minute >= M)))
+             {
+                 val w = week + 1
+                 monday.set(Calendar.WEEK_OF_YEAR, w)
+             }
 
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
@@ -177,6 +190,13 @@ class DateTime : AppCompatActivity() {
                 tuesday.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY)
 
 
+                if ((day > 3) || (hour > H) || ((hour == H) && (minute >= M)))
+                {
+                    val w = week + 1
+                    tuesday.set(Calendar.WEEK_OF_YEAR, w)
+                }
+
+
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
                     tuesday.timeInMillis,
@@ -203,6 +223,11 @@ class DateTime : AppCompatActivity() {
             wednesday.set(Calendar.MINUTE, M)
             wednesday.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY)
 
+            if ((day > 4) || (hour > H) || ((hour == H) && (minute >= M)))
+            {
+                val w = week + 1
+                wednesday.set(Calendar.WEEK_OF_YEAR, w)
+            }
 
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
@@ -226,6 +251,11 @@ class DateTime : AppCompatActivity() {
         thursday.set(Calendar.MINUTE, M)
         thursday.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY)
 
+        if ((day > 5) || (hour > H) || ((hour == H) && (minute >= M)))
+        {
+            val w = week + 1
+            thursday.set(Calendar.WEEK_OF_YEAR, w)
+        }
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
@@ -250,6 +280,11 @@ class DateTime : AppCompatActivity() {
             friday.set(Calendar.MINUTE, M)
             friday.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY)
 
+       if ((day > 6) || (hour > H) || ((hour == H) && (minute >= M)))
+       {
+           val w = week + 1
+           friday.set(Calendar.WEEK_OF_YEAR, w)
+       }
 
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
