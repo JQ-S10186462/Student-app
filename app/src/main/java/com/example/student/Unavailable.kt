@@ -1,6 +1,6 @@
 package com.example.student
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -23,11 +23,17 @@ class Unavailable : AppCompatActivity() {
 
         var NPISID_text = sharedPreference.getValueString("Supervisor")
         var ID_text = sharedPreference.getValueString("ID")
+        var Postal = sharedPreference.getValueString("Postal")
+        var Npis = sharedPreference.getValueString("Supervisor")
+
 
         var Option = findViewById<Spinner>(R.id.spinner)
         var script = "https://script.google.com/macros/s/AKfycbzjmCkpW5LuFOvdPbdVScr2IPNFTFQ3ZjubgIL7Jpv7xdKhvFnY/exec?"
         var Status = ""
         var input = ""
+
+        var MC = ""
+        var Others = ""
 
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -45,40 +51,41 @@ class Unavailable : AppCompatActivity() {
             }
             else if (Option_text == "MC")
             {
-                input = ""
-                Status = ""
-                Status = "&MC=1"
+                MC = "1"
+                Others = ""
             }
             else if (Option_text == "Others (Please state reason in log)")
             {
-                input = ""
-                Status = ""
-                Status = "&Others=1"
+                MC = ""
+                Others = "1"
             }
 
             if (Option_text != "Please Select")
             {
-                val queue = Volley.newRequestQueue(this)
-                input += script + "NPISID=" + NPISID_text + "&Course=*&StudentID=s" + ID_text + Status
+                Toast.makeText(applicationContext,"Reason Submited",Toast.LENGTH_SHORT).show()
 
-                val stringRequest = object : StringRequest(Request.Method.GET, input,
-                    Response.Listener <String> {
-                        Toast.makeText(applicationContext,"Reason Submited",Toast.LENGTH_SHORT).show()
+                val queue2 = Volley.newRequestQueue(this)
+                val url = "https://script.google.com/macros/s/AKfycbzHVvfi0NTe4cg18QqNcBsitSI2_Xzdp-XeJy7lZIax26T6WXe9/exec"
+
+                val stringRequest1 = object: StringRequest(
+                    Request.Method.POST, url,
+                    Response.Listener<String> {
                     },
-                    Response.ErrorListener {
-                        Toast.makeText(applicationContext,"Please try again",Toast.LENGTH_SHORT).show()
-                    })
-                    {}
+                    Response.ErrorListener {}) {
+                    override fun getParams(): Map<String, String> {
+                        val params: MutableMap<String, String> = HashMap()
+                        params["action"] = "StudentInput"
+                        params["STUDENTID"] = ID_text.toString()
+                        params ["POSTAL"] = Postal.toString()
+                        params ["NPISID"] = Npis.toString()
+                        params ["MC"] = MC
+                        params["OTHERS"] = Others
+                        return params
+                    }
+                }
+                queue2.add(stringRequest1)
 
-                stringRequest.setRetryPolicy(
-                    DefaultRetryPolicy(
-                        0,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-                    )
-                )
 
-                queue.add(stringRequest)
 
             }
 

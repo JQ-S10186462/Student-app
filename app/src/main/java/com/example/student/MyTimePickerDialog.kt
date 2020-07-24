@@ -3,7 +3,7 @@ package com.example.student
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import java.text.DateFormat
 import java.util.*
 

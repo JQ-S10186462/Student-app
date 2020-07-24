@@ -2,13 +2,13 @@ package com.example.student
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_register.*
@@ -43,40 +43,69 @@ class Register : AppCompatActivity() {
             val NPISID_text = NPISID.editableText.toString()
             sharedPreference.save("Supervisor", NPISID_text)
 
+            val Email = Student_ID + "@connect.np.edu.sg"
 
             val Postal_text = Postal.editableText.toString()
+            sharedPreference.save("Postal",Postal_text)
+
             val Course_text = Course.editableText.toString()
 
-            if ((Student_ID == "") || (NPISID_text == "") || (Postal_text == "") || (Course_text == "")) {
-                Toast.makeText(applicationContext, "Please Fill in the Blanks!", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                val x = "0"
 
+                if ((Student_ID == "") || (NPISID_text == "") || (Postal_text == "") || (Course_text == "")) {
+                    Toast.makeText(applicationContext, "Please Fill in the Blanks!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(applicationContext, "Info Submitted", Toast.LENGTH_SHORT).show()
 
-                val queue = Volley.newRequestQueue(this)
-                var input = ""
-                input += script + "NPISID=" + NPISID_text + "&Course=" + Course_text + "&StudentID=s" + Student_ID + "&Postal=" + Postal_text + "&Comment=Setup"
+                val queue2 = Volley.newRequestQueue(this)
+                val url = "https://script.google.com/macros/s/AKfycbzHVvfi0NTe4cg18QqNcBsitSI2_Xzdp-XeJy7lZIax26T6WXe9/exec"
 
-
-                val stringRequest = object : StringRequest(Request.Method.GET, input,
+                val stringRequest1 = object: StringRequest(
+                    Request.Method.POST, url,
                     Response.Listener<String> {
-                        Toast.makeText(applicationContext, "Success", Toast.LENGTH_SHORT).show()
                     },
-                    Response.ErrorListener {
-                        Toast.makeText(applicationContext, "Fail", Toast.LENGTH_SHORT).show()
-                    })
-                {}
-                stringRequest.setRetryPolicy(
-                    DefaultRetryPolicy(
-                        0,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-                    )
-                )
+                    Response.ErrorListener {}) {
+                    override fun getParams(): Map<String, String> {
+                        val params: MutableMap<String, String> = HashMap()
+                        params["action"] = "RegisterStudent"
+                        params["NPISID"] = NPISID_text
+                        params["COURSE"] = Course_text
+                        params ["STUDENTID"] = Student_ID
+                        params ["POSTAL"] = Postal_text
+                        params ["EMAIL"] = Email
+                        return params
+                    }
+                }
+                queue2.add(stringRequest1)
 
 
-                queue.add(stringRequest)
+                    val queue = Volley.newRequestQueue(this)
+                    val script = "https://developers.onemap.sg/commonapi/search?searchVal="
+                    var input = ""
+                    var string = ""
+
+                    input +=  script + Postal_text + "&returnGeom=Y&getAddrDetails=N&pageNum=1"
+
+
+
+                    val jsonObjectRequest = object : JsonObjectRequest(Request.Method.GET, url, null,
+                        Response.Listener { response ->
+                            var one = response.toString()
+                            var loc = one.split(",")
+                            var lon = loc[7].split(":")
+                            var la = loc[6].split(":")
+
+                            val long = lon[1].split('"')
+                            val lat = la[1].split('"')
+
+
+                            sharedPreference.save("lat",lat[1])
+                            sharedPreference.save("long",long[1])
+                        },
+                        Response.ErrorListener {})
+                    {}
+                    queue.add(jsonObjectRequest)
+
+
 
 
 

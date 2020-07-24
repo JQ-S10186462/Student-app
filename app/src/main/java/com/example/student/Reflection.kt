@@ -5,9 +5,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -53,6 +53,9 @@ class Reflection : AppCompatActivity() {
 
 
             val ID = sharedPreference.getValueString("ID")
+            val Postal = sharedPreference.getValueString("Postal")
+            val Npis = sharedPreference.getValueString("Supervisor")
+
             var text = findViewById<TextView>(R.id.timenow)
             var Reflect = findViewById<EditText>(R.id.dailylog)
 
@@ -104,32 +107,31 @@ class Reflection : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val x = "0"
-                sharedPreference.save("x",x)
-                val queue = Volley.newRequestQueue(this)
-                var input = ""
-                input += script + "Date=" + yr + "-" + mh + "-" + dy + "&Course=!&StudentID=s" + ID + "&Reflections=" + Log
-                val stringRequest = object : StringRequest(Request.Method.GET, input,
+
+                Toast.makeText(
+                    applicationContext,
+                    "Relfection Entered", Toast.LENGTH_SHORT).show()
+
+                val queue2 = Volley.newRequestQueue(this)
+                val url = "https://script.google.com/macros/s/AKfycbzHVvfi0NTe4cg18QqNcBsitSI2_Xzdp-XeJy7lZIax26T6WXe9/exec"
+
+                val stringRequest1 = object: StringRequest(
+                    Request.Method.POST, url,
                     Response.Listener<String> {
-                        Toast.makeText(
-                            applicationContext,
-                            "Reflection Submitted",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     },
-                    Response.ErrorListener {
-                        Toast.makeText(applicationContext, "Please submit reflection again", Toast.LENGTH_SHORT).show()
-                    }) {}
+                    Response.ErrorListener {}) {
+                    override fun getParams(): Map<String, String> {
+                        val params: MutableMap<String, String> = HashMap()
+                        params["action"] = "writereflect"
+                        params["Date"] = yr + "-" + mh + "-" + dy
+                        params ["STUDENTID"] = ID.toString()
+                        params ["REFLECTION"] = Log
+                        return params
+                    }
+                }
+                queue2.add(stringRequest1)
 
-                stringRequest.setRetryPolicy(
-                    DefaultRetryPolicy(
-                        0,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-                    )
-                )
 
-                queue.add(stringRequest)
 
 
             }
