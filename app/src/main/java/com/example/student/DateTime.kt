@@ -31,7 +31,7 @@ class DateTime : AppCompatActivity() {
         val sharedPreference: SharedPreference = SharedPreference(this)
 
         val Button = findViewById<Button>(R.id.time)
-        val textView = findViewById<TextView>(R.id.Timetext)
+
 
         val Monday = findViewById<Spinner>(R.id.Mon)
         val Tuesday = findViewById<Spinner>(R.id.Tue)
@@ -82,43 +82,12 @@ class DateTime : AppCompatActivity() {
         Fri.adapter = adapter
 
 
-
-
-        val Hour_Day = findViewById<EditText>(R.id.Ho)
-        val Minute_day = findViewById<EditText>(R.id.Mi)
-
-
-
-
-        time.setOnClickListener {
-
-            val cal = Calendar.getInstance()
-            cal.timeInMillis = System.currentTimeMillis()
-
-            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                cal.set(Calendar.HOUR_OF_DAY, hour)
-                cal.set(Calendar.MINUTE, minute)
-                textView.text = SimpleDateFormat("HH:mm").format(cal.time)
-            }
-            TimePickerDialog(
-                this,
-                timeSetListener,
-                cal.get(Calendar.HOUR_OF_DAY),
-                cal.get(Calendar.MINUTE),
-                true
-            ).show()
+        var Hour_Day = findViewById<EditText>(R.id.Ho)
+        var Minute_day = findViewById<EditText>(R.id.Mi)
 
 
 
 
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                cal.timeInMillis,
-                AlarmManager.INTERVAL_DAY,
-                pendingIntent
-            )
-
-        }
 
 
         buttonsubmit.setOnClickListener {
@@ -142,167 +111,165 @@ class DateTime : AppCompatActivity() {
 
             val H = Hou.toInt()
             val M = Min.toInt()
+            var x = 0
 
-            if (Mon_Text == "ON") {
-                val monday = Calendar.getInstance()
-                monday.timeInMillis = System.currentTimeMillis()
-                monday.set(Calendar.HOUR_OF_DAY, H)
-                monday.set(Calendar.MINUTE, M)
-                monday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
 
-             if ((day > 2) || (hour > H) || ((hour == H) && (minute >= M)))
-             {
-                 val w = week + 1
-                 monday.set(Calendar.WEEK_OF_YEAR, w)
-             }
-
-                alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    monday.timeInMillis,
-                    AlarmManager.INTERVAL_DAY * 7,
-                    pendingIntent
-                )
-            } else {
-                alarmManager.cancel(pendingIntent)
-                val monday = "0"
-                sharedPreference.save("Monday", monday)
+            if ((H >= 24) || (M >= 60)) {
+                Toast.makeText(applicationContext, "Invalid Time", Toast.LENGTH_SHORT).show()
+            } else if (Hou == "") {
+                Toast.makeText(applicationContext, "Fill in the blanks", Toast.LENGTH_SHORT).show()
             }
+            else if (Min == "") {
+                Toast.makeText(applicationContext, "Fill in the blanks", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                Toast.makeText(applicationContext, "Alarm Set", Toast.LENGTH_SHORT).show()
+                if (Mon_Text == "ON") {
+                    val monday = Calendar.getInstance()
+                    monday.timeInMillis = System.currentTimeMillis()
+                    monday.set(Calendar.HOUR_OF_DAY, H)
+                    monday.set(Calendar.MINUTE, M)
+                    monday.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
 
+                    if ((day > 2) || ((day == 2) && ((hour > H) || ((hour == H) && (minute >= M))))) {
+                        val w = week + 1
+                        monday.set(Calendar.WEEK_OF_YEAR, w)
+                    }
 
-            if (Tue_Text == "ON") {
-                val Min = Minute_day.editableText.toString()
-                val Hou = Hour_Day.editableText.toString()
-
-                val H = Hou.toInt()
-                val M = Min.toInt()
-
-
-                val tuesday = Calendar.getInstance()
-                tuesday.timeInMillis = System.currentTimeMillis()
-                tuesday.set(Calendar.HOUR_OF_DAY, H)
-                tuesday.set(Calendar.MINUTE, M)
-                tuesday.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY)
-
-
-                if ((day > 3) || (hour > H) || ((hour == H) && (minute >= M)))
-                {
-                    val w = week + 1
-                    tuesday.set(Calendar.WEEK_OF_YEAR, w)
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        monday.timeInMillis,
+                        AlarmManager.INTERVAL_DAY * 7,
+                        pendingIntent
+                    )
+                } else {
+                    alarmManager.cancel(pendingIntent)
+                    val monday = "0"
+                    sharedPreference.save("Monday", monday)
                 }
 
 
-                alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    tuesday.timeInMillis,
-                    AlarmManager.INTERVAL_DAY * 7,
-                    pendingIntent1
-                )
-            } else {
-                alarmManager.cancel(pendingIntent1)
-                val tuesday = "0"
-                sharedPreference.save("Tuesday", tuesday)
+                if (Tue_Text == "ON") {
+                    val Min = Minute_day.editableText.toString()
+                    val Hou = Hour_Day.editableText.toString()
+
+                    val H = Hou.toInt()
+                    val M = Min.toInt()
+
+
+                    val tuesday = Calendar.getInstance()
+                    tuesday.timeInMillis = System.currentTimeMillis()
+                    tuesday.set(Calendar.HOUR_OF_DAY, H)
+                    tuesday.set(Calendar.MINUTE, M)
+                    tuesday.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY)
+
+
+                    if ((day > 3) || ((day == 3) && ((hour > H) || ((hour == H) && (minute >= M))))) {
+                        val w = week + 1
+                        tuesday.set(Calendar.WEEK_OF_YEAR, w)
+                    }
+
+
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        tuesday.timeInMillis,
+                        AlarmManager.INTERVAL_DAY * 7,
+                        pendingIntent1
+                    )
+                } else {
+                    alarmManager.cancel(pendingIntent1)
+                    val tuesday = "0"
+                    sharedPreference.save("Tuesday", tuesday)
+                }
+
+
+                if (Wed_Text == "ON") {
+                    val Min = Minute_day.editableText.toString()
+                    val Hou = Hour_Day.editableText.toString()
+
+                    val H = Hou.toInt()
+                    val M = Min.toInt()
+
+                    val wednesday = Calendar.getInstance()
+                    wednesday.timeInMillis = System.currentTimeMillis()
+                    wednesday.set(Calendar.HOUR_OF_DAY, H)
+                    wednesday.set(Calendar.MINUTE, M)
+                    wednesday.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY)
+
+                    if ((day > 4) || ((day == 4) && ((hour > H) || ((hour == H) && (minute >= M))))) {
+                        val w = week + 1
+                        wednesday.set(Calendar.WEEK_OF_YEAR, w)
+                    }
+
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        wednesday.timeInMillis,
+                        AlarmManager.INTERVAL_DAY * 7,
+                        pendingIntent2
+                    )
+                } else {
+                    alarmManager.cancel(pendingIntent2)
+                    val wednesday = "0"
+                    sharedPreference.save("Wednesday", wednesday)
+                }
+
+
+                if (Thu_Text == "ON") {
+
+                    val thursday = Calendar.getInstance()
+                    thursday.timeInMillis = System.currentTimeMillis()
+                    thursday.set(Calendar.HOUR_OF_DAY, H)
+                    thursday.set(Calendar.MINUTE, M)
+                    thursday.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY)
+
+                    if ((day > 5) || ((day == 5) && ((hour > H) || ((hour == H) && (minute >= M))))) {
+                        val w = week + 1
+                        thursday.set(Calendar.WEEK_OF_YEAR, w)
+                    }
+
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        thursday.timeInMillis,
+                        AlarmManager.INTERVAL_DAY * 7,
+                        pendingIntent3
+                    )
+                } else {
+                    alarmManager.cancel(pendingIntent3)
+                    val thursday = "0"
+                    sharedPreference.save("Thursday", thursday)
+                }
+
+
+
+                if (Fri_Text == "ON") {
+                    val friday = Calendar.getInstance()
+                    friday.timeInMillis = System.currentTimeMillis()
+                    friday.set(Calendar.HOUR_OF_DAY, H)
+                    friday.set(Calendar.MINUTE, M)
+                    friday.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY)
+
+                    if ((day > 6) || ((day == 6) && ((hour > H) || ((hour == H) && (minute >= M))))) {
+                        val w = week + 1
+                        friday.set(Calendar.WEEK_OF_YEAR, w)
+                    }
+
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        friday.timeInMillis,
+                        AlarmManager.INTERVAL_DAY * 7,
+                        pendingIntent4
+                    )
+                } else {
+                    alarmManager.cancel(pendingIntent4)
+                    val friday = "0"
+                    sharedPreference.save("Friday", friday)
+                }
+
             }
 
-
-        if (Wed_Text == "ON") {
-            val Min = Minute_day.editableText.toString()
-            val Hou = Hour_Day.editableText.toString()
-
-            val H = Hou.toInt()
-            val M = Min.toInt()
-
-            val wednesday = Calendar.getInstance()
-            wednesday.timeInMillis = System.currentTimeMillis()
-            wednesday.set(Calendar.HOUR_OF_DAY, H)
-            wednesday.set(Calendar.MINUTE, M)
-            wednesday.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY)
-
-            if ((day > 4) || (hour > H) || ((hour == H) && (minute >= M)))
-            {
-                val w = week + 1
-                wednesday.set(Calendar.WEEK_OF_YEAR, w)
-            }
-
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                wednesday.timeInMillis,
-                AlarmManager.INTERVAL_DAY * 7,
-                pendingIntent2
-            )
-        } else {
-            alarmManager.cancel(pendingIntent2)
-            val wednesday = "0"
-            sharedPreference.save("Wednesday", wednesday)
         }
 
-
-    if (Thu_Text == "ON")
-    {
-
-        val thursday = Calendar.getInstance()
-        thursday.timeInMillis = System.currentTimeMillis()
-        thursday.set(Calendar.HOUR_OF_DAY, H)
-        thursday.set(Calendar.MINUTE, M)
-        thursday.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY)
-
-        if ((day > 5) || (hour > H) || ((hour == H) && (minute >= M)))
-        {
-            val w = week + 1
-            thursday.set(Calendar.WEEK_OF_YEAR, w)
-        }
-
-        alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            thursday.timeInMillis,
-            AlarmManager.INTERVAL_DAY * 7,
-            pendingIntent3
-        )
-    } else
-    {
-        alarmManager.cancel(pendingIntent3)
-        val thursday = "0"
-        sharedPreference.save("Thursday", thursday)
-    }
-
-
-
-   if (Fri_Text == "ON")
-   {
-            val friday = Calendar.getInstance()
-            friday.timeInMillis = System.currentTimeMillis()
-            friday.set(Calendar.HOUR_OF_DAY, H)
-            friday.set(Calendar.MINUTE, M)
-            friday.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY)
-
-       if ((day > 6) || (hour > H) || ((hour == H) && (minute >= M)))
-       {
-           val w = week + 1
-           friday.set(Calendar.WEEK_OF_YEAR, w)
-       }
-
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                friday.timeInMillis,
-                AlarmManager.INTERVAL_DAY * 7,
-                pendingIntent4
-            )
-        } else {
-            alarmManager.cancel(pendingIntent4)
-            val friday = "0"
-            sharedPreference.save("Friday", friday)
-        }
-}
-
-
-
-
-        setalarm.setOnClickListener {
-            alarmManager.cancel(pendingIntent)
-            alarmManager.cancel(pendingIntent1)
-            alarmManager.cancel(pendingIntent2)
-            alarmManager.cancel(pendingIntent3)
-            alarmManager.cancel(pendingIntent4)
-        }
     }
 }
 

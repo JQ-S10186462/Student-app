@@ -4,7 +4,11 @@
     <string-array name="Choice">
         <item>Please Select</item>
         <item>MC</item>
-        <item>Others (Please state reason in log)</item>
+        <item>Working From Home</item>
+        <item>Absent</item>
+        <item>Off Day</item>
+        <item>Internship Suspended</item>
+        <item>OnSite</item>
     </string-array>
 
     <string-array name="Switch">

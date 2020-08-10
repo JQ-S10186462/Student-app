@@ -107,13 +107,15 @@ class Reflection : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+               val x = "1"
+                sharedPreference.save("x",x)
 
                 Toast.makeText(
                     applicationContext,
                     "Relfection Entered", Toast.LENGTH_SHORT).show()
 
                 val queue2 = Volley.newRequestQueue(this)
-                val url = "https://script.google.com/macros/s/AKfycbzHVvfi0NTe4cg18QqNcBsitSI2_Xzdp-XeJy7lZIax26T6WXe9/exec"
+                val url = "https://script.google.com/macros/s/AKfycbxi47Ee3vq94_lU5-46wwLf2qV2bHUdFg0O-l4QOYk2qKgHy0Y/exec"
 
                 val stringRequest1 = object: StringRequest(
                     Request.Method.POST, url,
@@ -131,7 +133,7 @@ class Reflection : AppCompatActivity() {
                 }
                 queue2.add(stringRequest1)
 
-
+                startActivity(Intent(this, MainActivity::class.java))
 
 
             }

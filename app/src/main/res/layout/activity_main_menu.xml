@@ -10,9 +10,8 @@
         android:id="@+id/Attendence"
         android:layout_width="115dp"
         android:layout_height="49dp"
-        android:layout_marginStart="158dp"
-        android:layout_marginLeft="158dp"
-        android:layout_marginTop="264dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="260dp"
         android:text="Attendance"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,9 +20,8 @@
         android:id="@+id/Reflect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="168dp"
-        android:layout_marginLeft="168dp"
-        android:layout_marginTop="509dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="500dp"
         android:text="Daily Log"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

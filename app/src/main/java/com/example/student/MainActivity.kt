@@ -113,8 +113,7 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreference: SharedPreference = SharedPreference(this)
         val StudentID = sharedPreference.getValueString("ID")
-        val x = "0"
-        sharedPreference.save("x", x)
+
 
         val alarm = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(this, AlarmBroadcast::class.java)
@@ -164,7 +163,7 @@ class MainActivity : AppCompatActivity() {
             dy += "" + day
         }
 
-val date = yr + "-" + mh + "-" + dy
+        val date = yr + "-" + mh + "-" + dy
 
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
@@ -180,23 +179,14 @@ val date = yr + "-" + mh + "-" + dy
             pendingIntent
         )
 
-        if ((Hou >= 18) && (Hou <= 21)) {
-            /* Check reflection from server entered*/
-            val queue = Volley.newRequestQueue(this)
 
-            val url =  "https://script.google.com/macros/s/AKfycbzHVvfi0NTe4cg18QqNcBsitSI2_Xzdp-XeJy7lZIax26T6WXe9/exec?" + "action=read" + "&STUDENTID=" + StudentID + "&Date=" + date
+        if (Hou == 18)   {
+            val x = "0"
+            sharedPreference.save("x", x)
+        }
 
-            val stringRequest = object : StringRequest(Request.Method.GET, url,
-                Response.Listener<String> { response ->
-                    val reflect = response.toString()
-                    val reflection = reflect.split(",")
-                    sharedPreference.save("reflect", reflection[1])
-                },
-                Response.ErrorListener {
-                }) {}
-            queue.add(stringRequest)
 
-            if (sharedPreference.getValueString("reflect") == "") {
+            if (sharedPreference.getValueString("x") == "0") {
                 val cal = Calendar.getInstance()
 
                 cal.timeInMillis = System.currentTimeMillis()
@@ -224,57 +214,18 @@ val date = yr + "-" + mh + "-" + dy
                     AlarmManager.INTERVAL_DAY,
                     pendingIntent2
                 )
-            } else {
+            }
+
+            if (sharedPreference.getValueString("x") == "1") {
                 alarm.cancel(pendingIntent1)
                 alarm.cancel(pendingIntent2)
             }
-        }
 
 
-        val show = findViewById<Button>(R.id.notify)
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         notify.setOnClickListener {
 
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            val pendingIntent =
-                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                notificationChannel =
-                    NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
-                notificationChannel.enableLights(true)
-                notificationChannel.lightColor = Color.RED
-                notificationChannel.enableVibration(true)
-                notificationManager.createNotificationChannel(notificationChannel)
-
-                builder = Notification.Builder(this, channelId)
-                    .setContentTitle("Student")
-                    .setContentText("Ready for Work?")
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentIntent(pendingIntent)
-            } else {
-                builder = Notification.Builder(this)
-                    .setContentTitle("Student")
-                    .setContentText("Ready for Work?")
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentIntent(pendingIntent)
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                notificationManager.notify(0, builder.build())
-            }
-
-            val queue = Volley.newRequestQueue(this)
-
-            val url =  "https://script.google.com/macros/s/AKfycbzHVvfi0NTe4cg18QqNcBsitSI2_Xzdp-XeJy7lZIax26T6WXe9/exec?" + "action=read" + "&STUDENTID=" + StudentID + "&Date=" + date
-
-            val stringRequest =  StringRequest(Request.Method.GET, url,
-                Response.Listener<String> { response ->
-                    val reflect = response.toString()
-                    val reflection = reflect.split("")
-                    textView10.text = reflection[9]
-                },
-                Response.ErrorListener {
-                })
-            queue.add(stringRequest)
+            textView10.text = sharedPreference.getValueString("x").toString()
 
         }
 

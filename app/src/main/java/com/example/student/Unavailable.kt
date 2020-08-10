@@ -33,7 +33,12 @@ class Unavailable : AppCompatActivity() {
         var input = ""
 
         var MC = ""
-        var Others = ""
+        var Onsite = ""
+        var Suspend = ""
+        var WFH = ""
+        var Absent = ""
+        var Off = ""
+
 
         val adapter = ArrayAdapter.createFromResource(
             this,
@@ -52,12 +57,58 @@ class Unavailable : AppCompatActivity() {
             else if (Option_text == "MC")
             {
                 MC = "1"
-                Others = ""
+                Onsite = ""
+                Suspend = ""
+                WFH = ""
+                Absent = ""
+                Off = ""
+
             }
-            else if (Option_text == "Others (Please state reason in log)")
+            else if (Option_text == "OnSite")
             {
                 MC = ""
-                Others = "1"
+                Onsite = "1"
+                Suspend = ""
+                WFH = ""
+                Absent = ""
+                Off = ""
+
+            }
+            else if (Option_text == "Off Day")
+            {
+                MC = ""
+                Onsite = ""
+                Suspend = ""
+                WFH = ""
+                Absent = ""
+                Off = "1"
+            }
+            else if (Option_text == "Absent")
+            {
+                MC = ""
+                Onsite = ""
+                Suspend = ""
+                WFH = ""
+                Absent = "1"
+                Off = ""
+            }
+            else if (Option_text == "Working From Home")
+            {
+                MC = ""
+                Onsite = ""
+                Suspend = ""
+                WFH = "1"
+                Absent = ""
+                Off = ""
+            }
+            else if (Option_text == "Internship Suspended")
+            {
+                MC = ""
+                Onsite = ""
+                Suspend = "1"
+                WFH = ""
+                Absent = ""
+                Off = ""
             }
 
             if (Option_text != "Please Select")
@@ -65,7 +116,7 @@ class Unavailable : AppCompatActivity() {
                 Toast.makeText(applicationContext,"Reason Submited",Toast.LENGTH_SHORT).show()
 
                 val queue2 = Volley.newRequestQueue(this)
-                val url = "https://script.google.com/macros/s/AKfycbzHVvfi0NTe4cg18QqNcBsitSI2_Xzdp-XeJy7lZIax26T6WXe9/exec"
+                val url = "https://script.google.com/macros/s/AKfycbxi47Ee3vq94_lU5-46wwLf2qV2bHUdFg0O-l4QOYk2qKgHy0Y/exec"
 
                 val stringRequest1 = object: StringRequest(
                     Request.Method.POST, url,
@@ -79,7 +130,11 @@ class Unavailable : AppCompatActivity() {
                         params ["POSTAL"] = Postal.toString()
                         params ["NPISID"] = Npis.toString()
                         params ["MC"] = MC
-                        params["OTHERS"] = Others
+                        params["ABSENT"] = Absent
+                        params ["INTERNSHIPSUSPENDED"] = Suspend
+                        params ["WFH"] = WFH
+                        params ["OFFDAY"] = Off
+                        params ["ONSITE"] = Onsite
                         return params
                     }
                 }

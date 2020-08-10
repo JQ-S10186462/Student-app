@@ -57,7 +57,7 @@ class Register : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Info Submitted", Toast.LENGTH_SHORT).show()
 
                 val queue2 = Volley.newRequestQueue(this)
-                val url = "https://script.google.com/macros/s/AKfycbzHVvfi0NTe4cg18QqNcBsitSI2_Xzdp-XeJy7lZIax26T6WXe9/exec"
+                val url = "https://script.google.com/macros/s/AKfycbxi47Ee3vq94_lU5-46wwLf2qV2bHUdFg0O-l4QOYk2qKgHy0Y/exec"
 
                 val stringRequest1 = object: StringRequest(
                     Request.Method.POST, url,
@@ -87,7 +87,7 @@ class Register : AppCompatActivity() {
 
 
 
-                    val jsonObjectRequest = object : JsonObjectRequest(Request.Method.GET, url, null,
+                    val jsonObjectRequest = object : JsonObjectRequest(Request.Method.GET, input, null,
                         Response.Listener { response ->
                             var one = response.toString()
                             var loc = one.split(",")
