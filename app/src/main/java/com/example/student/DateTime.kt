@@ -38,8 +38,11 @@ class DateTime : AppCompatActivity() {
         val Wednesday = findViewById<Spinner>(R.id.Wed)
         val Thursday = findViewById<Spinner>(R.id.Thur)
         val Friday = findViewById<Spinner>(R.id.Fri)
+        val Sataurday = findViewById<Spinner>(R.id.Sat)
+        val Sunday = findViewById<Spinner>(R.id.Sun)
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
         val intent = Intent(this, AlarmBroadcastReceiver::class.java)
         val pendingIntent =
             PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -59,6 +62,15 @@ class DateTime : AppCompatActivity() {
         val intent4 = Intent(this, AlarmBroadcastReceiver::class.java)
         val pendingIntent4 =
             PendingIntent.getBroadcast(this, 4, intent4, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val intent5 = Intent(this, AlarmBroadcastReceiver::class.java)
+        val pendingIntent5 =
+            PendingIntent.getBroadcast(this, 5, intent5, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val intent6 = Intent(this, AlarmBroadcastReceiver::class.java)
+        val pendingIntent6 =
+            PendingIntent.getBroadcast(this, 6, intent6, PendingIntent.FLAG_UPDATE_CURRENT)
+
 
 
         val adapter = ArrayAdapter.createFromResource(
@@ -80,6 +92,13 @@ class DateTime : AppCompatActivity() {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
         Fri.adapter = adapter
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+        Sataurday.adapter = adapter
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+        Sunday.adapter = adapter
+
 
 
         var Hour_Day = findViewById<EditText>(R.id.Ho)
@@ -104,6 +123,8 @@ class DateTime : AppCompatActivity() {
             val Wed_Text = Wednesday.selectedItem.toString()
             val Thu_Text = Thursday.selectedItem.toString()
             val Fri_Text = Friday.selectedItem.toString()
+            val Sat_Text = Sataurday.selectedItem.toString()
+            val Sun_Text = Sunday.selectedItem.toString()
 
 
             val Min = Minute_day.editableText.toString()
@@ -265,6 +286,55 @@ class DateTime : AppCompatActivity() {
                     val friday = "0"
                     sharedPreference.save("Friday", friday)
                 }
+
+
+                if (Sat_Text == "ON") {
+                    val saturday = Calendar.getInstance()
+                    saturday.timeInMillis = System.currentTimeMillis()
+                    saturday.set(Calendar.HOUR_OF_DAY, H)
+                    saturday.set(Calendar.MINUTE, M)
+                    saturday.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY)
+
+                    if ((day > 7) || ((day == 7) && ((hour > H) || ((hour == H) && (minute >= M))))) {
+                        val w = week + 1
+                        saturday.set(Calendar.WEEK_OF_YEAR, w)
+                    }
+
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        saturday.timeInMillis,
+                        AlarmManager.INTERVAL_DAY * 7,
+                        pendingIntent5
+                    )
+                } else {
+                    alarmManager.cancel(pendingIntent5)
+                }
+
+
+                if (Sun_Text == "ON") {
+                    val sunday = Calendar.getInstance()
+                    sunday.timeInMillis = System.currentTimeMillis()
+                    sunday.set(Calendar.HOUR_OF_DAY, H)
+                    sunday.set(Calendar.MINUTE, M)
+                    sunday.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+
+                    if ((day > 1) || ((day == 1) && ((hour > H) || ((hour == H) && (minute >= M))))) {
+                        val w = week + 1
+                        sunday.set(Calendar.WEEK_OF_YEAR, w)
+                    }
+
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        sunday.timeInMillis,
+                        AlarmManager.INTERVAL_DAY * 7,
+                        pendingIntent6
+                    )
+                } else {
+                    alarmManager.cancel(pendingIntent6)
+                    val friday = "0"
+                    sharedPreference.save("Friday", friday)
+                }
+
 
             }
 

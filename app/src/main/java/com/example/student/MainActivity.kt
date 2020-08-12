@@ -132,6 +132,7 @@ class MainActivity : AppCompatActivity() {
         val Hou = now.get(Calendar.HOUR_OF_DAY)
         val min = now.get(Calendar.MINUTE)
         val sec = now.get(Calendar.SECOND)
+        val Week = now.get(Calendar.DAY_OF_WEEK)
 
         var year = now.get(Calendar.YEAR)
         var month = now.get(Calendar.MONTH)
@@ -225,7 +226,8 @@ class MainActivity : AppCompatActivity() {
 
         notify.setOnClickListener {
 
-            textView10.text = sharedPreference.getValueString("x").toString()
+            textView10.text = Week.toString()
+
 
         }
 

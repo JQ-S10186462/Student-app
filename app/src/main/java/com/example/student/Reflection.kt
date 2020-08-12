@@ -49,6 +49,7 @@ class Reflection : AppCompatActivity() {
 
 
 
+
         Logging.setOnClickListener {
 
 
@@ -109,6 +110,7 @@ class Reflection : AppCompatActivity() {
             } else {
                val x = "1"
                 sharedPreference.save("x",x)
+
 
                 Toast.makeText(
                     applicationContext,
