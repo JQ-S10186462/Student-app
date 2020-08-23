@@ -37,17 +37,17 @@ class Present : AppCompatActivity() {
 
         val sharedPreference: SharedPreference = SharedPreference(this)
         val Postal = sharedPreference.getValueString("Postal")
-        val textView = findViewById<TextView>(R.id.textView9)
+
 
         val longitude = sharedPreference.getValueString("long").toString().toDouble()
         val latitude = sharedPreference.getValueString("lat").toString().toDouble()
 
 
-        var Maxlongitute = longitude + 0.001
-        var Minlongitute = longitude - 0.001
+        var Maxlongitute = longitude + 0.0003
+        var Minlongitute = longitude - 0.0003
 
-        var Maxlatitude = latitude + 0.001
-        var Minlatitude = latitude - 0.001
+        var Maxlatitude = latitude + 0.0003
+        var Minlatitude = latitude - 0.0003
 
 
 
@@ -80,9 +80,6 @@ class Present : AppCompatActivity() {
                                 0
                             }
 
-                            textView3.text = x.toString() + longnow.toString()
-                            textView6.text = y.toString() + latnow.toString()
-                            textView9.text = Postal.toString() + longitude.toString() + latitude.toString()
 
                             val ID = sharedPreference.getValueString("ID")
                             val NPISID = sharedPreference.getValueString("Supervisor")
@@ -173,8 +170,7 @@ class Present : AppCompatActivity() {
         sharedPreference.save("latNow",location.latitude.toString())
         sharedPreference.save("longNow",location.longitude.toString())
 
-        textView6.text = "long:" + location.longitude.toString()
-        textView3.text = "lat:" + location.latitude.toString()
+
 
 
     }

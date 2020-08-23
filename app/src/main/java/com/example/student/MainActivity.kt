@@ -48,17 +48,7 @@ class MainActivity : AppCompatActivity() {
         val biometricManager = BiometricManager.from(this)
 
 
-        when (biometricManager.canAuthenticate()) {
-            BiometricManager.BIOMETRIC_SUCCESS ->
-              Toast.makeText(this@MainActivity, "Success",Toast.LENGTH_SHORT).show()
-            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
-                Toast.makeText(this@MainActivity, "No Hardware",Toast.LENGTH_SHORT).show()
-            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
-                    Toast.makeText(this@MainActivity, "Error",Toast.LENGTH_SHORT).show()
-            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED ->
-                Toast.makeText(this@MainActivity, "No input",Toast.LENGTH_SHORT).show()
 
-        }
 
         biometricPrompt = BiometricPrompt(this,executor,
             object: BiometricPrompt.AuthenticationCallback()
@@ -181,7 +171,7 @@ class MainActivity : AppCompatActivity() {
         )
 
 
-        if (Hou == 18)   {
+        if ((Hou == 18) && ((min == 0)||(min == 1))) {
             val x = "0"
             sharedPreference.save("x", x)
         }
@@ -224,12 +214,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        notify.setOnClickListener {
 
-            textView10.text = Week.toString()
-
-
-        }
 
 
 

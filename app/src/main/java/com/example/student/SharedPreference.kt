@@ -32,6 +32,7 @@ class SharedPreference(val context:Context) {
     }
 
 
+
     fun removeValue(Identification: String) {
 
         val editor: SharedPreferences.Editor = sharedPref.edit()

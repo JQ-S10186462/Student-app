@@ -14,16 +14,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Unavailable"></activity>
-        <activity android:name=".Password" />
-        <activity android:name=".Present" />
-        <activity android:name=".MainMenu" />
-        <activity android:name=".Reflection" />
-        <activity android:name=".DateTime" />
-        <activity android:name=".Register" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Unavailable"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Password"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Present"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainMenu"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Reflection"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DateTime"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Register"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
